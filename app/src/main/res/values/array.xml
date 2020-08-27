@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="idCard">
+        <item></item>
+        <item>第二代身份证</item>
+        <item>港澳通行证 </item>
+        <item>护照</item>
+    </string-array>
+</resources>
