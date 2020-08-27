@@ -2,11 +2,10 @@ package com.example.hp.mydata;
 
 import android.content.Intent;
 import android.net.http.SslError;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
@@ -14,11 +13,16 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity {
 
+    @BindView(R.id.webView)
+    WebView webView;
     //Webview
-    private WebView webView;
+    //private WebView webView;
     private RelativeLayout container;
     //底部菜单
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -30,15 +34,12 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
                     startActivity(intent);
-                    Log.i("","csr");
-                    Log.i("","csr2");
-                    //Log.i("","csr3");
-                   // container.setVisibility(View.INVISIBLE);
+                    // container.setVisibility(View.INVISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
-                    Intent intent2 = new Intent(MainActivity.this,MyData.class);
+                    Intent intent2 = new Intent(MainActivity.this, MyData.class);
                     startActivity(intent2);
                     //webView.setVisibility(View.INVISIBLE);
                     return true;
@@ -51,25 +52,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         init();
     }
 
     /**
      * 初始化事件
      */
-    public void init(){
+    public void init() {
         //底部菜单
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        webView = (WebView) findViewById(R.id.webView);
+        //webView = (WebView) findViewById(R.id.webView);
         //需要加载的网页的url
         webView.loadUrl("https://app.ssm.gov.mo/healthPHD/page/index.html");
         WebSettings settings = webView.getSettings();
         // 如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         settings.setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient(){
-            public boolean shouldOverrideUrlLoading(WebView view, String url){
+        webView.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }

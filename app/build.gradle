@@ -36,5 +36,8 @@ dependencies {
         force = true
     }
     implementation 'com.android.support:design:26.1.0'
+    //导入ButterKnife
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor "com.jakewharton:butterknife-compiler:8.5.1"
 
 }
