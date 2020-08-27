@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this,MainActivity.class);
                     startActivity(intent);
                     Log.i("","csr");
+                    Log.i("","csr2");
                    // container.setVisibility(View.INVISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
