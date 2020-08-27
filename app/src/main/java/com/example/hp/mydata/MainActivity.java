@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     Intent intent = new Intent(MainActivity.this,MainActivity.class);
                     startActivity(intent);
+                    Log.i("","csr");
                    // container.setVisibility(View.INVISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
