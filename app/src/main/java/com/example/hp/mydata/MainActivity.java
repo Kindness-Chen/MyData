@@ -1,29 +1,18 @@
 package com.example.hp.mydata;
 
-import android.content.Intent;
-import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity  {
 
 //    @BindView(R.id.webView)
 //    WebView webView;
@@ -93,11 +82,12 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     private BottomNavigationView nav_bottom;
-    private List<Fragment> mFragments;
+    //private List<Fragment> mFragments;
+    //protected Fragment currentFragment;//要显示的Fragment
+    //protected Fragment hideFragment;//要隐藏的Fragment
 
-    private int lastPosition;//上次fragment的位置
-    private Fragment currentFragment;//要显示的Fragment
-    private Fragment hideFragment;//要隐藏的Fragment
+    //private int lastPosition;//上次fragment的位置
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -115,20 +105,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(getLayoutId());
 
         initData();
         initView(savedInstanceState);
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
         mFragments = new ArrayList<>();
         mFragments.add(HealthFragment.newInstance());
         mFragments.add(MyDataFragment.newInstance());
+        nav_bottom = (BottomNavigationView) findViewById(R.id.navigation);
     }
 
-    private void initView(Bundle savedInstanceState) {
-        nav_bottom = (BottomNavigationView) findViewById(R.id.navigation);
+    //@Override
+    protected void initView(Bundle savedInstanceState) {
         if (savedInstanceState == null){
             //根据传入的Bundle对象判断是正常启动还是重建 true表示正常启动，false表示重建
             setSelectedFragment(0);
@@ -139,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_home:
                         setSelectedFragment(0);
+                        //openActivity(MainActivity.class);
                         break;
                     case R.id.navigation_dashboard:
                         setSelectedFragment(1);
@@ -148,37 +141,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     /**
      * 根据位置选择Fragment
-     * @param position 要选中的fragment的位置
+     * @param
      */
-    private void  setSelectedFragment(int position){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        currentFragment = fragmentManager.findFragmentByTag("fragment"+position);//要显示的fragment(解决了activity重建时新建实例的问题)
-        hideFragment = fragmentManager.findFragmentByTag("fragment" + lastPosition);//要隐藏的fragment(解决了activity重建时新建实例的问题)
-        if (position != lastPosition){//如果位置不同
-            if (hideFragment != null){//如果要隐藏的fragment存在，则隐藏
-                transaction.hide(hideFragment);
-            }
-            if (currentFragment == null){//如果要显示的fragment不存在，则新加并提交事务
-                currentFragment = mFragments.get(position);
-                transaction.add(R.id.fl_container,currentFragment,"fragment"+position);
-            }else {//如果要显示的存在则直接显示
-                transaction.show(currentFragment);
-            }
-        }
+//    protected void  setSelectedFragment(int position){
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        currentFragment = fragmentManager.findFragmentByTag("fragment"+position);//要显示的fragment(解决了activity重建时新建实例的问题)
+//        hideFragment = fragmentManager.findFragmentByTag("fragment" + lastPosition);//要隐藏的fragment(解决了activity重建时新建实例的问题)
+//        if (position != lastPosition){//如果位置不同
+//            if (hideFragment != null){//如果要隐藏的fragment存在，则隐藏
+//                transaction.hide(hideFragment);
+//            }
+//            if (currentFragment == null){//如果要显示的fragment不存在，则新加并提交事务
+//                currentFragment = mFragments.get(position);
+//                transaction.add(R.id.fl_container,currentFragment,"fragment"+position);
+//            }else {//如果要显示的存在则直接显示
+//                transaction.show(currentFragment);
+//            }
+//        }
+//
+//        if (position == lastPosition){//如果位置相同
+//            if (currentFragment == null){//如果fragment不存在(第一次启动应用的时候)
+//                currentFragment = mFragments.get(position);
+//                transaction.add(R.id.fl_container,currentFragment,"fragment"+position);
+//            }//如果位置相同，且fragment存在，则不作任何操作
+//        }
+//        transaction.commit();//提交事务
+//        lastPosition = position;//更新要隐藏的fragment的位置
+//    }
 
-        if (position == lastPosition){//如果位置相同
-            if (currentFragment == null){//如果fragment不存在(第一次启动应用的时候)
-                currentFragment = mFragments.get(position);
-                transaction.add(R.id.fl_container,currentFragment,"fragment"+position);
-            }//如果位置相同，且fragment存在，则不作任何操作
-        }
-        transaction.commit();//提交事务
-        lastPosition = position;//更新要隐藏的fragment的位置
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
     }
-
-
 }

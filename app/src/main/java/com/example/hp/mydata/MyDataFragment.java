@@ -1,19 +1,12 @@
 package com.example.hp.mydata;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +14,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
-public class MyDataFragment extends Fragment {
+public class MyDataFragment extends BaseFragment {
 
 
     @BindView(R.id.btn_Date)
@@ -30,7 +23,7 @@ public class MyDataFragment extends Fragment {
     TextView txtDate;
     Unbinder unbinder;
 
-    Calendar calendar = Calendar.getInstance(Locale.CHINA);
+
 
 
     public static MyDataFragment newInstance() {
@@ -55,40 +48,44 @@ public class MyDataFragment extends Fragment {
     }
 
     @Override
+    protected int setLayoutResouceId() {
+        return 0;
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
-    /**
-     * 日期选择
-     *
-     * @param context
-     * @param themeResId
-     * @param tv
-     * @param calendar
-     */
-    public static void showDatePickerDialog(Context context, int themeResId, final TextView tv, Calendar calendar) {
-        // 直接创建一个DatePickerDialog对话框实例，并将它显示出来
-        new DatePickerDialog(context, themeResId, new DatePickerDialog.OnDateSetListener() {
-            // 绑定监听器(How the parent is notified that the date is set.)
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                // 此处得到选择的时间，可以进行你想要的操作
-                tv.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
-            }
-        }
-                // 设置初始日期
-                , calendar.get(Calendar.YEAR)
-                , calendar.get(Calendar.MONTH)
-                , calendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
+//    /**
+//     * 日期选择
+//     *
+//     * @param context
+//     * @param themeResId
+//     * @param tv
+//     * @param calendar
+//     */
+//    public static void showDatePickerDialog(Context context, int themeResId, final TextView tv, Calendar calendar) {
+//        // 直接创建一个DatePickerDialog对话框实例，并将它显示出来
+//        new DatePickerDialog(context, themeResId, new DatePickerDialog.OnDateSetListener() {
+//            // 绑定监听器(How the parent is notified that the date is set.)
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                // 此处得到选择的时间，可以进行你想要的操作
+//                tv.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
+//            }
+//        }
+//                // 设置初始日期
+//                , calendar.get(Calendar.YEAR)
+//                , calendar.get(Calendar.MONTH)
+//                , calendar.get(Calendar.DAY_OF_MONTH)).show();
+//    }
 
     @OnClick(R.id.btn_Date)
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.btn_Date :
                 showDatePickerDialog(getContext(), 5, txtDate, calendar);
-                Toast.makeText(getContext(), "您选择了性别男", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

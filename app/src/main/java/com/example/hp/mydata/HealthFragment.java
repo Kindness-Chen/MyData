@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class HealthFragment extends Fragment {
+public class HealthFragment extends BaseFragment {
 
     @BindView(R.id.webView)
     WebView webView;
@@ -43,32 +43,38 @@ public class HealthFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    protected int setLayoutResouceId() {
+        return 0;
+    }
+
     /**
      * 初始化事件
      */
     public void init() {
-        webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webView.setWebViewClient(new MyWebViewClient());
-        webView.loadUrl("https://app.ssm.gov.mo/healthPHD/page/index.html");
+//        webSettings = webView.getSettings();
+//        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        //webView.setWebViewClient(new MyWebViewClient());
+//        webView.loadUrl("https://app.ssm.gov.mo/healthPHD/page/index.html");
+        showWebView(webSettings,webView,"https://app.ssm.gov.mo/healthPHD/page/index.html");
     }
 
-    private class MyWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            //    return super.shouldOverrideUrlLoading(view, url);
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onReceivedError(WebView view, int errorCode,
-                                    String description, String failingUrl) {
-        }
-    }
+//    private class MyWebViewClient extends WebViewClient {
+//        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//            //    return super.shouldOverrideUrlLoading(view, url);
+//            view.loadUrl(url);
+//            return true;
+//        }
+//
+//        @Override
+//        public void onReceivedError(WebView view, int errorCode,
+//                                    String description, String failingUrl) {
+//        }
+//    }
 
     @Override
     public void onDestroyView() {
